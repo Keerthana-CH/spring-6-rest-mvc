@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @RestController
@@ -50,6 +51,12 @@ public class CustomerController {
         if(cus==null){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("{customerId}")
+    public ResponseEntity updateBeerById(@PathVariable("customerId") Long id, @RequestBody Customer customer){
+        customerService.updateById(id,customer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

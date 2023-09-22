@@ -1,8 +1,8 @@
 package com.sfg.spring6restmvc.services;
 
-import com.sfg.spring6restmvc.model.Beer;
 import com.sfg.spring6restmvc.model.Customer;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -91,4 +91,14 @@ public class CustomerServiceImpl implements CustomerService {
             return null;
         }
     }
+
+    @Override
+    public void updateById(Long id, Customer customer) {
+        Customer existingC = customerMap.get(id);
+
+        if(StringUtils.hasText(customer.getCustomerName())){
+            existingC.setCustomerName(customer.getCustomerName());
+        }
+    }
+
 }
