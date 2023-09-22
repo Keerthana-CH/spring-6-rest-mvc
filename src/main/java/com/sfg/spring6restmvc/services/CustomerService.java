@@ -8,4 +8,6 @@ public interface CustomerService {
 
     public List<Customer> listCustomers();
     public Customer getCustomerById(Long id);
+
+    Customer saveNewCustomer(Customer customer);
 }
