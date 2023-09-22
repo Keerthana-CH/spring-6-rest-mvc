@@ -12,4 +12,6 @@ public interface CustomerService {
     Customer saveNewCustomer(Customer customer);
 
     void updateCustomerById(Long id, Customer customer);
+
+    Customer deleteById(Long id);
 }

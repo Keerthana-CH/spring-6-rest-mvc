@@ -1,5 +1,6 @@
 package com.sfg.spring6restmvc.services;
 
+import com.sfg.spring6restmvc.model.Beer;
 import com.sfg.spring6restmvc.model.Customer;
 import org.springframework.stereotype.Service;
 
@@ -77,5 +78,17 @@ public class CustomerServiceImpl implements CustomerService {
         existingC.setVersion(customer.getVersion());
 
         customerMap.put(existingC.getId(),existingC);
+    }
+
+    @Override
+    public Customer deleteById(Long id) {
+
+        try{
+            Customer cus = customerMap.get(id);
+            customerMap.remove(id);
+            return cus;
+        }catch (Exception e){
+            return null;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.sfg.spring6restmvc.controller;
 
 
+import com.sfg.spring6restmvc.model.Beer;
 import com.sfg.spring6restmvc.model.Customer;
 import com.sfg.spring6restmvc.services.CustomerService;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,15 @@ public class CustomerController {
     @PutMapping("/{customerId}")
     public ResponseEntity updateCustomerById(@PathVariable("customerId") Long id,@RequestBody Customer customer){
         customerService.updateCustomerById(id,customer);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("{customerId}")
+    public ResponseEntity deleteById(@PathVariable("customerId") Long id){
+        Customer cus = customerService.deleteById(id);
+        if(cus==null){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
