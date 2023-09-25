@@ -2,7 +2,6 @@ package com.sfg.spring6restmvc.controller;
 
 import com.sfg.spring6restmvc.model.Beer;
 import com.sfg.spring6restmvc.services.BeerService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
