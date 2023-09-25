@@ -52,7 +52,7 @@ public class CustomerController {
     }
 
     @PatchMapping("{customerId}")
-    public ResponseEntity<Object> updateBeerById(@PathVariable("customerId") Long id, @RequestBody Customer customer){
+    public ResponseEntity<Object> updateById(@PathVariable("customerId") Long id, @RequestBody Customer customer){
         customerService.updateById(id,customer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
