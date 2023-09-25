@@ -10,7 +10,7 @@ import java.util.*;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private Map<Long,Customer> customerMap;
+    private final Map<Long,Customer> customerMap;
 
     public CustomerServiceImpl(){
         customerMap = new HashMap<>();
