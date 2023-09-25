@@ -1,19 +1,15 @@
 package com.sfg.spring6restmvc.controller;
 
 
-import com.sfg.spring6restmvc.model.Beer;
 import com.sfg.spring6restmvc.model.Customer;
 import com.sfg.spring6restmvc.services.CustomerService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,32 +28,32 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity saveNewCustomer(@RequestBody Customer customer){
+    public ResponseEntity<Object> saveNewCustomer(@RequestBody Customer customer){
         Customer savedCustomer = customerService.saveNewCustomer(customer);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location","/api/v1/customer/" + savedCustomer.getId());
-        return new ResponseEntity(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity updateCustomerById(@PathVariable("customerId") Long id,@RequestBody Customer customer){
+    public ResponseEntity<Object> updateCustomerById(@PathVariable("customerId") Long id,@RequestBody Customer customer){
         customerService.updateCustomerById(id,customer);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("{customerId}")
-    public ResponseEntity deleteById(@PathVariable("customerId") Long id){
+    public ResponseEntity<Object> deleteById(@PathVariable("customerId") Long id){
         Customer cus = customerService.deleteById(id);
         if(cus==null){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("{customerId}")
-    public ResponseEntity updateBeerById(@PathVariable("customerId") Long id, @RequestBody Customer customer){
+    public ResponseEntity<Object> updateBeerById(@PathVariable("customerId") Long id, @RequestBody Customer customer){
         customerService.updateById(id,customer);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

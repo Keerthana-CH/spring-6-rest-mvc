@@ -3,12 +3,11 @@ package com.sfg.spring6restmvc.services;
 import com.sfg.spring6restmvc.model.Customer;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface CustomerService {
 
-    public List<Customer> listCustomers();
-    public Customer getCustomerById(Long id);
+    List<Customer> listCustomers();
+    Customer getCustomerById(Long id);
 
     Customer saveNewCustomer(Customer customer);
 
