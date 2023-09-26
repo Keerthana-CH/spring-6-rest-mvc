@@ -1,7 +1,7 @@
 package com.sfg.spring6restmvc.controller;
 
 
-import com.sfg.spring6restmvc.model.Customer;
+import com.sfg.spring6restmvc.model.CustomerDTO;
 import com.sfg.spring6restmvc.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -18,18 +18,18 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Customer> listCustomers(){
+    public List<CustomerDTO> listCustomers(){
         return customerService.listCustomers();
     }
 
     @RequestMapping(value = "/{customerId}",method = RequestMethod.GET)
-    public Customer getCustomerById(@PathVariable("customerId") Long d){
+    public CustomerDTO getCustomerById(@PathVariable("customerId") Long d){
         return customerService.getCustomerById(d);
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveNewCustomer(@RequestBody Customer customer){
-        Customer savedCustomer = customerService.saveNewCustomer(customer);
+    public ResponseEntity<Object> saveNewCustomer(@RequestBody CustomerDTO customer){
+        CustomerDTO savedCustomer = customerService.saveNewCustomer(customer);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location","/api/v1/customer/" + savedCustomer.getId());
@@ -37,14 +37,14 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity<Object> updateCustomerById(@PathVariable("customerId") Long id,@RequestBody Customer customer){
+    public ResponseEntity<Object> updateCustomerById(@PathVariable("customerId") Long id,@RequestBody CustomerDTO customer){
         customerService.updateCustomerById(id,customer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("{customerId}")
     public ResponseEntity<Object> deleteById(@PathVariable("customerId") Long id){
-        Customer cus = customerService.deleteById(id);
+        CustomerDTO cus = customerService.deleteById(id);
         if(cus==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -52,7 +52,7 @@ public class CustomerController {
     }
 
     @PatchMapping("{customerId}")
-    public ResponseEntity<Object> updateById(@PathVariable("customerId") Long id, @RequestBody Customer customer){
+    public ResponseEntity<Object> updateById(@PathVariable("customerId") Long id, @RequestBody CustomerDTO customer){
         customerService.updateById(id,customer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

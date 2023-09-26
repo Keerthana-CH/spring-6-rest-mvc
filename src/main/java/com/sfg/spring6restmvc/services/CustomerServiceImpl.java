@@ -1,6 +1,6 @@
 package com.sfg.spring6restmvc.services;
 
-import com.sfg.spring6restmvc.model.Customer;
+import com.sfg.spring6restmvc.model.CustomerDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -10,12 +10,12 @@ import java.util.*;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private final Map<Long,Customer> customerMap;
+    private final Map<Long, CustomerDTO> customerMap;
 
     public CustomerServiceImpl(){
         customerMap = new HashMap<>();
 
-        Customer john = Customer.builder()
+        CustomerDTO john = CustomerDTO.builder()
                 .id(100L)
                 .customerName("John")
                 .version(1)
@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .lastModifiedDate(LocalDate.now())
                 .build();
 
-        Customer sai = Customer.builder()
+        CustomerDTO sai = CustomerDTO.builder()
                 .id(101L)
                 .customerName("Sai")
                 .version(1)
@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .lastModifiedDate(LocalDate.now())
                 .build();
 
-        Customer mam = Customer.builder()
+        CustomerDTO mam = CustomerDTO.builder()
                 .id(102L)
                 .customerName("Mam")
                 .version(1)
@@ -44,20 +44,20 @@ public class CustomerServiceImpl implements CustomerService {
         customerMap.put(mam.getId(), mam);
     }
     @Override
-    public List<Customer> listCustomers() {
+    public List<CustomerDTO> listCustomers() {
 
         return new ArrayList<>(customerMap.values());
     }
 
     @Override
-    public Customer getCustomerById(Long id) {
+    public CustomerDTO getCustomerById(Long id) {
         return customerMap.get(id);
     }
 
     @Override
-    public Customer saveNewCustomer(Customer customer) {
+    public CustomerDTO saveNewCustomer(CustomerDTO customer) {
 
-        Customer savedCustomer = Customer.builder()
+        CustomerDTO savedCustomer = CustomerDTO.builder()
                 .id(customer.getId())
                 .customerName(customer.getCustomerName())
                 .version(1)
@@ -71,8 +71,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomerById(Long id, Customer customer) {
-        Customer existingC = customerMap.get(id);
+    public void updateCustomerById(Long id, CustomerDTO customer) {
+        CustomerDTO existingC = customerMap.get(id);
         existingC.setId(id);
         existingC.setCustomerName(customer.getCustomerName());
         existingC.setVersion(customer.getVersion());
@@ -81,10 +81,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer deleteById(Long id) {
+    public CustomerDTO deleteById(Long id) {
 
         try{
-            Customer cus = customerMap.get(id);
+            CustomerDTO cus = customerMap.get(id);
             customerMap.remove(id);
             return cus;
         }catch (Exception e){
@@ -93,8 +93,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateById(Long id, Customer customer) {
-        Customer existingC = customerMap.get(id);
+    public void updateById(Long id, CustomerDTO customer) {
+        CustomerDTO existingC = customerMap.get(id);
 
         if(StringUtils.hasText(customer.getCustomerName())){
             existingC.setCustomerName(customer.getCustomerName());

@@ -1,20 +1,20 @@
 package com.sfg.spring6restmvc.services;
 
-import com.sfg.spring6restmvc.model.Beer;
+import com.sfg.spring6restmvc.model.BeerDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface BeerService {
-    Beer getBeerById(UUID id);
+    BeerDTO getBeerById(UUID id);
 
-    List<Beer> listBeers();
+    List<BeerDTO> listBeers();
 
-    Beer saveNewBeer(Beer beer);
+    BeerDTO saveNewBeer(BeerDTO beer);
 
-    void updateBeer(UUID id, Beer beer);
+    void updateBeer(UUID id, BeerDTO beer);
 
-    Beer deleteById(UUID id);
+    BeerDTO deleteById(UUID id);
 
-    void updateBeerById(UUID id, Beer beer);
+    void updateBeerById(UUID id, BeerDTO beer);
 }

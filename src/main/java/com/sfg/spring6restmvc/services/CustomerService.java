@@ -1,20 +1,20 @@
 package com.sfg.spring6restmvc.services;
 
-import com.sfg.spring6restmvc.model.Customer;
+import com.sfg.spring6restmvc.model.CustomerDTO;
 
 import java.util.List;
 
 public interface CustomerService {
 
-    List<Customer> listCustomers();
-    Customer getCustomerById(Long id);
+    List<CustomerDTO> listCustomers();
+    CustomerDTO getCustomerById(Long id);
 
-    Customer saveNewCustomer(Customer customer);
+    CustomerDTO saveNewCustomer(CustomerDTO customer);
 
-    void updateCustomerById(Long id, Customer customer);
+    void updateCustomerById(Long id, CustomerDTO customer);
 
-    Customer deleteById(Long id);
+    CustomerDTO deleteById(Long id);
 
-    void updateById(Long id, Customer customer);
+    void updateById(Long id, CustomerDTO customer);
 
 }
