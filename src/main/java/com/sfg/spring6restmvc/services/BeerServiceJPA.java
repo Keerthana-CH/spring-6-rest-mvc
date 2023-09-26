@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -19,8 +20,8 @@ public class BeerServiceJPA implements BeerService {
     private final BeerRepository beerRepository;
     private final BeerMapper beerMapper;
     @Override
-    public BeerDTO getBeerById(UUID id) {
-        return null;
+    public Optional<BeerDTO> getBeerById(UUID id) {
+        return Optional.empty();
     }
 
     @Override

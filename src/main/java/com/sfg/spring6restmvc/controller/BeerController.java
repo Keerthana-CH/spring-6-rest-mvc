@@ -28,7 +28,7 @@ public class BeerController {
     public BeerDTO getBeerById(@PathVariable("beerId") UUID beerId){
 
         log.debug("getBeerById - ********* controller BeerController"+beerId);
-        return beerService.getBeerById(beerId);
+        return beerService.getBeerById(beerId).orElseThrow(NotFoundException::new);
     }
 
     @PostMapping()

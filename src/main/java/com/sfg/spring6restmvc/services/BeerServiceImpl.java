@@ -60,10 +60,10 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public BeerDTO getBeerById(UUID id) {
+    public Optional<BeerDTO> getBeerById(UUID id) {
 
         log.debug("getBeerById - service BeerServiceImpl"+id);
-        return this.beerMap.get(id);
+        return Optional.ofNullable(this.beerMap.get(id));
     }
 
     @Override
