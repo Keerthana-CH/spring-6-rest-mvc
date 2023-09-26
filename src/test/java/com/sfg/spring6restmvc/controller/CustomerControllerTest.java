@@ -14,6 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -52,7 +54,7 @@ class CustomerControllerTest {
         mockMvc.perform(delete("/api/v1/customer/" + customer.getId())
                 .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isNoContent());
-        verify(customerService).deleteById((Long) uuidArgumentCaptor.capture());
+        verify(customerService).deleteById((UUID) uuidArgumentCaptor.capture());
 
         assertThat(customer.getId()).isEqualTo(uuidArgumentCaptor.getValue());
     }
@@ -67,7 +69,7 @@ class CustomerControllerTest {
                     .content(objectMapper.writeValueAsString(customer)))
                 .andExpect(status().isNoContent());
 
-        verify(customerService).updateCustomerById(any(Long.class),any(CustomerDTO.class));
+        verify(customerService).updateCustomerById(any(UUID.class),any(CustomerDTO.class));
     }
 
     @Test
@@ -103,7 +105,7 @@ class CustomerControllerTest {
 
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
-        given(customerService.getCustomerById(100L)).willReturn(customer);
+        given(customerService.getCustomerById(customer.getId())).willReturn(customer);
 
         mockMvc.perform(get("/api/v1/customer/"+"100")
                 .accept(MediaType.APPLICATION_JSON))

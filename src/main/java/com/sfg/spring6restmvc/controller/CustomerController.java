@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,7 +24,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/{customerId}",method = RequestMethod.GET)
-    public CustomerDTO getCustomerById(@PathVariable("customerId") Long d){
+    public CustomerDTO getCustomerById(@PathVariable("customerId") UUID d){
         return customerService.getCustomerById(d);
     }
 
@@ -37,13 +38,13 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity<Object> updateCustomerById(@PathVariable("customerId") Long id,@RequestBody CustomerDTO customer){
+    public ResponseEntity<Object> updateCustomerById(@PathVariable("customerId") UUID id,@RequestBody CustomerDTO customer){
         customerService.updateCustomerById(id,customer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("{customerId}")
-    public ResponseEntity<Object> deleteById(@PathVariable("customerId") Long id){
+    public ResponseEntity<Object> deleteById(@PathVariable("customerId") UUID id){
         CustomerDTO cus = customerService.deleteById(id);
         if(cus==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -52,7 +53,7 @@ public class CustomerController {
     }
 
     @PatchMapping("{customerId}")
-    public ResponseEntity<Object> updateById(@PathVariable("customerId") Long id, @RequestBody CustomerDTO customer){
+    public ResponseEntity<Object> updateById(@PathVariable("customerId") UUID id, @RequestBody CustomerDTO customer){
         customerService.updateById(id,customer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
