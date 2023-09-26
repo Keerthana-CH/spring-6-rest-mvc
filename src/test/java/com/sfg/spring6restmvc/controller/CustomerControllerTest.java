@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -105,7 +106,7 @@ class CustomerControllerTest {
 
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
-        given(customerService.getCustomerById(customer.getId())).willReturn(customer);
+        given(customerService.getCustomerById(customer.getId())).willReturn(Optional.of(customer));
 
         mockMvc.perform(get("/api/v1/customer/"+"100")
                 .accept(MediaType.APPLICATION_JSON))
