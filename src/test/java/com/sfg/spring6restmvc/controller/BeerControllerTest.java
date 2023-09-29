@@ -49,7 +49,7 @@ class BeerControllerTest {
     void testDeleteBeer() throws Exception {
         BeerDTO beer = beerServiceImpl.listBeers().get(0);
 
-        given(beerService.deleteById(any())).willReturn(beer);
+        given(beerService.deleteById(any())).willReturn(true);
 
         mockMvc.perform(delete("/api/v1/beer/" + beer.getId())
                         .accept(MediaType.APPLICATION_JSON))
