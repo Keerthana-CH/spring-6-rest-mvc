@@ -52,6 +52,7 @@ class CustomerControllerTest {
     void testDeleteCustomer() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
 
+        given(customerService.deleteById(any())).willReturn(true);
         mockMvc.perform(delete("/api/v1/customer/" + customer.getId())
                 .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isNoContent());
@@ -70,7 +71,7 @@ class CustomerControllerTest {
                     .content(objectMapper.writeValueAsString(customer)))
                 .andExpect(status().isNoContent());
 
-        verify(customerService).updateCustomerById(any(UUID.class),any(CustomerDTO.class));
+        verify(customerService).updateById(any(UUID.class),any(CustomerDTO.class));
     }
 
     @Test
@@ -108,8 +109,9 @@ class CustomerControllerTest {
 
         given(customerService.getCustomerById(customer.getId())).willReturn(Optional.of(customer));
 
-        mockMvc.perform(get("/api/v1/customer/"+"100")
+        mockMvc.perform(get("/api/v1/customer/"+customer.getId())
                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(jsonPath("$.id",is(customer.getId().toString())))
                 .andExpect(jsonPath("$.customerName",is(customer.getCustomerName())));

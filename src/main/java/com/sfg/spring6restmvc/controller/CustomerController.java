@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -39,22 +40,22 @@ public class CustomerController {
 
     @PutMapping("/{customerId}")
     public ResponseEntity<Object> updateCustomerById(@PathVariable("customerId") UUID id,@RequestBody CustomerDTO customer){
-        customerService.updateCustomerById(id,customer);
+        customerService.updateById(id,customer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("{customerId}")
     public ResponseEntity<Object> deleteById(@PathVariable("customerId") UUID id){
-        CustomerDTO cus = customerService.deleteById(id);
-        if(cus==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Boolean cus = customerService.deleteById(id);
+        if(!cus){
+            throw new NotFoundException();
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("{customerId}")
     public ResponseEntity<Object> updateById(@PathVariable("customerId") UUID id, @RequestBody CustomerDTO customer){
-        customerService.updateById(id,customer);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        Optional<CustomerDTO> customerDTO = customerService.updateById(id, customer);
+        return customerDTO.map(customerDTO1 -> new ResponseEntity<>(HttpStatus.NO_CONTENT)).orElseThrow(NotFoundException::new);
     }
 }

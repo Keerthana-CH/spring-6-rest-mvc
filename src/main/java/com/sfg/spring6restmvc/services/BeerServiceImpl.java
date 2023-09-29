@@ -98,7 +98,7 @@ public class BeerServiceImpl implements BeerService {
         existingBeer.setPrice(beer.getPrice());
         existingBeer.setQuantityOnHand(beer.getQuantityOnHand());
 
-        return Optional.ofNullable(beerMap.put(existingBeer.getId(), existingBeer));
+        return Optional.of(existingBeer);
     }
 
     @Override
