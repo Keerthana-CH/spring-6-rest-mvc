@@ -1,6 +1,5 @@
 package com.sfg.spring6restmvc.services;
 
-import com.sfg.spring6restmvc.entities.Beer;
 import com.sfg.spring6restmvc.mappers.BeerMapper;
 import com.sfg.spring6restmvc.model.BeerDTO;
 import com.sfg.spring6restmvc.repositories.BeerRepository;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 
@@ -42,7 +42,10 @@ public class BeerServiceJPA implements BeerService {
     }
 
     @Override
-    public void updateBeer(UUID id, BeerDTO beer) {
+    public Optional<BeerDTO> updateBeer(UUID id, BeerDTO beer) {
+
+        AtomicReference<BeerDTO> atomicReference = new AtomicReference<>();
+
         beerRepository.findById(id).ifPresent(founfBeer ->{
             founfBeer.setBeerName(beer.getBeerName());
             founfBeer.setBeerStyle(beer.getBeerStyle());
@@ -52,8 +55,10 @@ public class BeerServiceJPA implements BeerService {
             founfBeer.setUpdateDate(beer.getUpdateDate());
             founfBeer.setCreatedDate(beer.getCreatedDate());
 
-            beerRepository.save(founfBeer);
+            atomicReference.set(beerMapper.beerTobeerDto(beerRepository.save(founfBeer)));
+
         });
+        return Optional.ofNullable(atomicReference.get());
     }
 
     @Override

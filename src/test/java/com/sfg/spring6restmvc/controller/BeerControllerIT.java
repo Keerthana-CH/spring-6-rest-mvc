@@ -32,8 +32,16 @@ class BeerControllerIT {
     @Autowired
     BeerMapper beerMapper;
 
+
     @Test
-    void testUpdateBeerById() {
+    void testUpdateNotFound() {
+        assertThrows(NotFoundException.class,() ->{
+            beerController.updateBeer(UUID.randomUUID(),BeerDTO.builder().build());
+        });
+    }
+
+    @Test
+    void testUpdateBeer() {
         Beer beer = beerRepository.findAll().get(0);
         BeerDTO beerDTO = beerMapper.beerTobeerDto(beer);
         beerDTO.setId(null);
@@ -49,6 +57,9 @@ class BeerControllerIT {
         assertThat(byId.getBeerName()).isEqualTo(beerName);
     }
 
+
+    @Transactional
+    @Rollback
     @Test
     void testSaveBeer() {
         BeerDTO newBeer = BeerDTO.builder()
