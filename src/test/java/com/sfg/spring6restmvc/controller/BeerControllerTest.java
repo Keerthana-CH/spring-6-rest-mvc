@@ -1,5 +1,6 @@
 package com.sfg.spring6restmvc.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sfg.spring6restmvc.model.BeerDTO;
 import com.sfg.spring6restmvc.services.BeerService;
@@ -76,6 +77,20 @@ class BeerControllerTest {
         verify(beerService).updateBeer(any(UUID.class),any(BeerDTO.class));
     }
 
+
+    @Test
+    void testCreateBeerWithNullBeerName() throws Exception {
+        BeerDTO build = BeerDTO.builder().build();
+
+        given(beerService.saveNewBeer(any(BeerDTO.class))).willReturn(beerServiceImpl.listBeers().get(1));
+
+        mockMvc.perform(post("/api/v1/beer")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(build)))
+                .andExpect(status().isBadRequest()
+                );
+    }
 
     @Test
     void testCreateNewBeer() throws Exception {
