@@ -1,5 +1,6 @@
 package com.sfg.spring6restmvc.services;
 
+import com.sfg.spring6restmvc.entities.Beer;
 import com.sfg.spring6restmvc.mappers.BeerMapper;
 import com.sfg.spring6restmvc.model.BeerDTO;
 import com.sfg.spring6restmvc.repositories.BeerRepository;
@@ -42,7 +43,17 @@ public class BeerServiceJPA implements BeerService {
 
     @Override
     public void updateBeer(UUID id, BeerDTO beer) {
+        beerRepository.findById(id).ifPresent(founfBeer ->{
+            founfBeer.setBeerName(beer.getBeerName());
+            founfBeer.setBeerStyle(beer.getBeerStyle());
+            founfBeer.setUpc(beer.getUpc());
+            founfBeer.setPrice(beer.getPrice());
+            founfBeer.setQuantityOnHand(beer.getQuantityOnHand());
+            founfBeer.setUpdateDate(beer.getUpdateDate());
+            founfBeer.setCreatedDate(beer.getCreatedDate());
 
+            beerRepository.save(founfBeer);
+        });
     }
 
     @Override

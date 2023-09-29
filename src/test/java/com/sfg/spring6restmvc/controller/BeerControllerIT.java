@@ -1,6 +1,7 @@
 package com.sfg.spring6restmvc.controller;
 
 import com.sfg.spring6restmvc.entities.Beer;
+import com.sfg.spring6restmvc.mappers.BeerMapper;
 import com.sfg.spring6restmvc.model.BeerDTO;
 import com.sfg.spring6restmvc.repositories.BeerRepository;
 import jakarta.transaction.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.as;
@@ -27,6 +29,25 @@ class BeerControllerIT {
     @Autowired
     BeerRepository beerRepository;
 
+    @Autowired
+    BeerMapper beerMapper;
+
+    @Test
+    void testUpdateBeerById() {
+        Beer beer = beerRepository.findAll().get(0);
+        BeerDTO beerDTO = beerMapper.beerTobeerDto(beer);
+        beerDTO.setId(null);
+        beerDTO.setVersion(null);
+        final String beerName ="UPDATED";
+        beerDTO.setBeerName(beerName);
+
+        ResponseEntity<Object> responseEntity = beerController.updateBeer(beer.getId(), beerDTO);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+        Beer byId = beerRepository.findById(beer.getId()).get();
+        assertThat(byId.getBeerName()).isEqualTo(beerName);
+    }
 
     @Test
     void testSaveBeer() {
