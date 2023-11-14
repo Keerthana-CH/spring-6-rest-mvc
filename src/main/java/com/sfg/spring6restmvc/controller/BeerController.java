@@ -44,7 +44,7 @@ public class BeerController {
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity<Object> updateBeer(@PathVariable("beerId") UUID id,@RequestBody BeerDTO beer){
+    public ResponseEntity<Object> updateBeer(@PathVariable("beerId") UUID id,@Validated @RequestBody BeerDTO beer){
         Optional<BeerDTO> beerDTO = beerService.updateBeer(id, beer);
         return beerDTO.map(beerDTO1 -> new ResponseEntity<>(HttpStatus.NO_CONTENT)).orElseThrow(NotFoundException::new);
 
