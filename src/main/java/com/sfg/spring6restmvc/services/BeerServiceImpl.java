@@ -112,7 +112,7 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public void updateBeerById(UUID id, BeerDTO beer) {
+    public Optional<BeerDTO> patchBeerById(UUID id, BeerDTO beer) {
         BeerDTO existingB = beerMap.get(id);
 
         if(StringUtils.hasText(beer.getBeerName())){
@@ -133,5 +133,7 @@ public class BeerServiceImpl implements BeerService {
         if (StringUtils.hasText(beer.getUpc())) {
             existingB.setUpc(beer.getUpc());
         }
+        return Optional.ofNullable(existingB);
     }
+
 }

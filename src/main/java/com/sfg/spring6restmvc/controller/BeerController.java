@@ -21,6 +21,9 @@ import java.util.UUID;
 public class BeerController {
     private final BeerService beerService;
 
+    public static final String BEER_PATH = "/api/v1/beer";
+    public static final String BEER_PATH_ID = BEER_PATH + "/{beerId}";
+
     @RequestMapping(method = RequestMethod.GET)
     public List<BeerDTO> listBeers(){
         return beerService.listBeers();
@@ -61,7 +64,7 @@ public class BeerController {
 
     @PatchMapping("{beerId}")
     public ResponseEntity<Object> updateBeerById(@PathVariable("beerId") UUID id,@RequestBody BeerDTO beer){
-        beerService.updateBeerById(id,beer);
+        beerService.patchBeerById(id,beer);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
