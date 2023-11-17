@@ -26,7 +26,7 @@ public class BeerController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<BeerDTO> listBeers(@RequestParam(required = false) String beerName){
-        return beerService.listBeers(null);
+        return beerService.listBeers(beerName);
     }
 
     @RequestMapping(value ="/{beerId}" , method = RequestMethod.GET)
