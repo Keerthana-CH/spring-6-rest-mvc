@@ -1,5 +1,6 @@
 package com.sfg.spring6restmvc.services;
 
+import com.sfg.spring6restmvc.entities.Beer;
 import com.sfg.spring6restmvc.mappers.BeerMapper;
 import com.sfg.spring6restmvc.model.BeerDTO;
 import com.sfg.spring6restmvc.repositories.BeerRepository;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,10 +32,22 @@ public class BeerServiceJPA implements BeerService {
 
     @Override
     public List<BeerDTO> listBeers(String beerName) {
-        return beerRepository.findAll()
+
+        List<Beer> beerList;
+        if (StringUtils.hasText(beerName)){
+            beerList = listBeersByBeerName(beerName);
+        }else {
+            beerList = beerRepository.findAll();
+        }
+        return beerList
                 .stream()
                 .map(beerMapper::beerTobeerDto)
                 .collect(Collectors.toList());
+    }
+
+    private List<Beer> listBeersByBeerName(String beerName) {
+
+        return new ArrayList<>();
     }
 
     @Override
@@ -93,9 +107,7 @@ public class BeerServiceJPA implements BeerService {
             }
             atomicReference.set(Optional.of(beerMapper
                     .beerTobeerDto(beerRepository.save(foundBeer))));
-        }, () -> {
-            atomicReference.set(Optional.empty());
-        });
+        }, () -> atomicReference.set(Optional.empty()));
 
         return atomicReference.get();
     }
