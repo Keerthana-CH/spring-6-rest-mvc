@@ -1,6 +1,7 @@
 package com.sfg.spring6restmvc.controller;
 
 import com.sfg.spring6restmvc.model.BeerDTO;
+import com.sfg.spring6restmvc.model.BeerStyle;
 import com.sfg.spring6restmvc.services.BeerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,9 @@ public class BeerController {
     public static final String BEER_PATH_ID = BEER_PATH + "/{beerId}";
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<BeerDTO> listBeers(@RequestParam(required = false) String beerName){
-        return beerService.listBeers(beerName);
+    public List<BeerDTO> listBeers(@RequestParam(required = false) String beerName,
+                                   @RequestParam(required = false) BeerStyle beerStyle){
+        return beerService.listBeers(beerName, beerStyle);
     }
 
     @RequestMapping(value ="/{beerId}" , method = RequestMethod.GET)
