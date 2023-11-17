@@ -27,6 +27,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,6 +57,14 @@ class BeerControllerIT {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
+
+    @Test
+    void testListBeersByBeerName() throws Exception {
+        mockMvc.perform(get(BeerController.BEER_PATH)
+                .queryParam("beerName","IPA"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()",is(100)));
+    }
     @Test
     void testPatchBeerNameTooLong() throws Exception {
         Beer beer = beerRepository.findAll().get(0);
