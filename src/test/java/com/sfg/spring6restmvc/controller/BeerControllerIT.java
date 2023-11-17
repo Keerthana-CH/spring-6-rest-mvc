@@ -168,7 +168,7 @@ class BeerControllerIT {
 
     @Test
     void testListBeers() {
-        List<BeerDTO> beerDTOS = beerController.listBeers();
+        List<BeerDTO> beerDTOS = beerController.listBeers(null);
 
         assertThat(beerDTOS.size()).isEqualTo(2413);
     }
@@ -178,7 +178,7 @@ class BeerControllerIT {
     @Test
     void testEmptyList() {
         beerRepository.deleteAll();
-        List<BeerDTO> beerDTOS = beerController.listBeers();
+        List<BeerDTO> beerDTOS = beerController.listBeers(null);
 
         assertThat(beerDTOS.size()).isEqualTo(0);
     }
