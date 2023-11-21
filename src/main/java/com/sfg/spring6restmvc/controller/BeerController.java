@@ -27,8 +27,11 @@ public class BeerController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<BeerDTO> listBeers(@RequestParam(required = false) String beerName,
-                                   @RequestParam(required = false) BeerStyle beerStyle, Boolean showInventory){
-        return beerService.listBeers(beerName, beerStyle, showInventory);
+                                   @RequestParam(required = false) BeerStyle beerStyle,
+                                   @RequestParam(required = false)Boolean showInventory,
+                                   @RequestParam(required = false)Integer pageNumber,
+                                   @RequestParam(required = false)Integer pageSize){
+        return beerService.listBeers(beerName, beerStyle, showInventory, 1, 25);
     }
 
     @RequestMapping(value ="/{beerId}" , method = RequestMethod.GET)
