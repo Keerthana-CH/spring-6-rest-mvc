@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -73,7 +74,9 @@ public class BeerServiceJPA implements BeerService {
             queryPageSize = 1000;
         }else queryPageSize = pageSize;
 
-        return PageRequest.of(queryPageNumber,queryPageSize);
+        Sort sort = Sort.by(Sort.Order.asc("beerStyle"));
+
+        return PageRequest.of(queryPageNumber,queryPageSize,sort);
     }
 
     private Page<Beer> listBeersByBeerNameAndBeerStyle(String beerName, BeerStyle beerStyle, Pageable pageable) {
